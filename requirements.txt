@@ -1,0 +1,8 @@
+# All versions tested on Google Colab (Python 3.10, TF 2.x)
+tensorflow>=2.10
+librosa>=0.10
+soundfile
+scikit-learn
+scipy
+matplotlib
+numpy
