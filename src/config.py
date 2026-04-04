@@ -45,7 +45,7 @@ DIM_SQUARE_SPEC = int(N_FFT / 2) + 1   # 128
 # ============================================================
 # Data-creation settings
 # ============================================================
-NB_SAMPLES = 40_000   # number of (voice+noise) training pairs to generate
+NB_SAMPLES = 5_000   # number of (voice+noise) training pairs to generate
                    # Use 40 000+ for production; 500 is fine for a smoke-test
 
 # ============================================================
