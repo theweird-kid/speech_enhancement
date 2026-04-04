@@ -57,11 +57,13 @@ def create_data(
 
     print("Loading voice files …")
     voice_frames = load_audio_dir_to_frames(
-        voice_dir, voice_files, sample_rate, frame_length, hop_frame, min_duration)
+        voice_dir, voice_files, sample_rate, frame_length, hop_frame, min_duration,
+        label='voice files')
 
     print("Loading noise files …")
     noise_frames = load_audio_dir_to_frames(
-        noise_dir, noise_files, sample_rate, frame_length, hop_frame_noise, min_duration)
+        noise_dir, noise_files, sample_rate, frame_length, hop_frame_noise, min_duration,
+        label='noise files')
 
     print(f"Voice frames: {voice_frames.shape}, Noise frames: {noise_frames.shape}")
 
@@ -80,9 +82,9 @@ def create_data(
 
     # --- 4. Spectrograms ----------------------------------------------------
     print("Computing spectrograms …")
-    m_clean, p_clean  = frames_to_spectrograms(clean, dim, n_fft, hop_fft)
-    m_noise, _        = frames_to_spectrograms(noise, dim, n_fft, hop_fft)
-    m_noisy, p_noisy  = frames_to_spectrograms(noisy, dim, n_fft, hop_fft)
+    m_clean, p_clean  = frames_to_spectrograms(clean, dim, n_fft, hop_fft, label='clean')
+    m_noise, _        = frames_to_spectrograms(noise, dim, n_fft, hop_fft, label='noise')
+    m_noisy, p_noisy  = frames_to_spectrograms(noisy, dim, n_fft, hop_fft, label='noisy')
 
     # --- 5. Save to disk ----------------------------------------------------
     print("Saving spectrograms …")
