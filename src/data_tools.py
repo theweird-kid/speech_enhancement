@@ -94,27 +94,22 @@ def audio_to_mag_phase(audio, n_fft, hop_length_fft):
 
 
 def frames_to_spectrograms(frames, dim, n_fft, hop_length_fft):
-    """Convert a (N, frame_length) array into (N, freq_bins, time_frames) mag & phase arrays.
+    """Convert a (N, frame_length) array into (N, dim, dim) mag & phase arrays.
 
-    Note: output shape is (N, n_fft//2+1, time_frames), NOT necessarily square.
-    The `dim` parameter is kept for API compatibility but is no longer used for allocation.
+    The STFT can produce (dim, dim+1) due to rounding in librosa's centering.
+    Both axes are cropped to `dim` so the output is always square and compatible
+    with the U-Net which expects (dim, dim) inputs.
     """
     N = frames.shape[0]
 
-    # Compute actual STFT shape from the first frame to avoid hardcoded assumptions
-    m0, p0 = audio_to_mag_phase(frames[0], n_fft, hop_length_fft)
-    freq_bins, time_frames = m0.shape
+    mag_db = np.zeros((N, dim, dim), dtype=np.float32)
+    phase  = np.zeros((N, dim, dim), dtype=complex)
 
-    mag_db = np.zeros((N, freq_bins, time_frames), dtype=np.float32)
-    phase  = np.zeros((N, freq_bins, time_frames), dtype=complex)
-
-    mag_db[0] = m0
-    phase[0]  = p0
-
-    for i in range(1, N):
+    for i in range(N):
         m, p = audio_to_mag_phase(frames[i], n_fft, hop_length_fft)
-        mag_db[i] = m
-        phase[i]  = p
+        # Crop to (dim, dim) — STFT may produce (dim, dim+1) due to centering
+        mag_db[i] = m[:dim, :dim]
+        phase[i]  = p[:dim, :dim]
 
     return mag_db, phase
 
