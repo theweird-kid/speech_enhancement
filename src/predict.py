@@ -15,6 +15,7 @@ import numpy as np
 import librosa
 import soundfile as sf
 
+import tensorflow as tf
 import config as C
 from model import build_unet
 from data_tools import (
@@ -50,7 +51,13 @@ def denoise_audio(
 
     # ---- Load model --------------------------------------------------------
     print(f"Loading model weights: {weights_path}")
-    model = build_unet(pretrained_weights=weights_path)
+    if weights_path.endswith('.weights.h5'):
+        # Keras 3 weights-only format
+        model = build_unet(pretrained_weights=weights_path)
+    else:
+        # Legacy full-model .h5 (saved with model.save())
+        model = tf.keras.models.load_model(weights_path)
+        print(f"Loaded full model from: {weights_path}")
 
     # ---- Load audio --------------------------------------------------------
     print(f"Loading audio: {input_path}")
