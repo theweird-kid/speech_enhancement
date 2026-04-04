@@ -46,7 +46,7 @@ def train_model(
     X_in = scale_input(X_noisy).astype(np.float32)
     X_ou = scale_output(X_noise_model).astype(np.float32)
 
-    # ---- Reshape for Keras (N, H, W, 1) ---------------------------------
+    # ---- Reshape for Keras (N, H, W, 1) ------------------------------------
     X_in = X_in[..., np.newaxis]
     X_ou = X_ou[..., np.newaxis]
 
@@ -66,7 +66,7 @@ def train_model(
     model.summary()
 
     # ---- Callbacks ---------------------------------------------------------
-    best_path = os.path.join(weights_dir, 'model_best.h5')
+    best_path = os.path.join(weights_dir, 'model_best.weights.h5')
     callbacks = [
         ModelCheckpoint(best_path, monitor='val_loss',
                         save_best_only=True, verbose=1),
@@ -87,7 +87,7 @@ def train_model(
     )
 
     # ---- Save final weights ------------------------------------------------
-    final_path = os.path.join(weights_dir, model_name + '.h5')
+    final_path = os.path.join(weights_dir, model_name + '.weights.h5')
     model.save_weights(final_path)
     print(f"Final weights saved: {final_path}")
 

@@ -55,7 +55,7 @@ EPOCHS              = 10
 BATCH_SIZE          = 32
 TRAINING_FROM_SCRATCH = True    # False = load PRETRAINED_WEIGHTS and fine-tune
 MODEL_NAME          = 'model_unet'
-PRETRAINED_WEIGHTS  = os.path.join(WEIGHTS_DIR, MODEL_NAME + '.h5')
+PRETRAINED_WEIGHTS  = os.path.join(WEIGHTS_DIR, MODEL_NAME + '.weights.h5')
 
 # ============================================================
 # Prediction / inference settings
