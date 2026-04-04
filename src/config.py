@@ -8,8 +8,7 @@ Edit the DRIVE_ROOT to match your Google Drive folder name.
 import os
 
 # ============================================================
-# ⚙️  Google Drive root  ← CHANGE THIS to match your Drive layout
-#    (Notebooks will override this via their User Settings cell)
+# Google Drive root  (update this to match your Drive layout)
 # ============================================================
 DRIVE_ROOT = '/content/drive/MyDrive/speech_enhancement'
 
@@ -46,14 +45,14 @@ DIM_SQUARE_SPEC = int(N_FFT / 2) + 1   # 128
 # ============================================================
 # Data-creation settings
 # ============================================================
-NB_SAMPLES = 500   # number of (voice+noise) training pairs to generate
+NB_SAMPLES = 40_000   # number of (voice+noise) training pairs to generate
                    # Use 40 000+ for production; 500 is fine for a smoke-test
 
 # ============================================================
 # Training settings
 # ============================================================
-EPOCHS              = 10
-BATCH_SIZE          = 32
+EPOCHS              = 50
+BATCH_SIZE          = 64
 TRAINING_FROM_SCRATCH = True    # False = load PRETRAINED_WEIGHTS and fine-tune
 MODEL_NAME          = 'model_unet'
 PRETRAINED_WEIGHTS  = os.path.join(WEIGHTS_DIR, MODEL_NAME + '.weights.h5')
