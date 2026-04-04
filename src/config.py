@@ -8,7 +8,8 @@ Edit the DRIVE_ROOT to match your Google Drive folder name.
 import os
 
 # ============================================================
-# Google Drive root  (update this to match your Drive layout)
+# ⚙️  Google Drive root  ← CHANGE THIS to match your Drive layout
+#    (Notebooks will override this via their User Settings cell)
 # ============================================================
 DRIVE_ROOT = '/content/drive/MyDrive/speech_enhancement'
 
