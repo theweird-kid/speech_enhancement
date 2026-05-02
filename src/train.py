@@ -87,9 +87,19 @@ def train_model(
     )
 
     # ---- Save final weights ------------------------------------------------
+    # Keras 3 expects the explicit .weights.h5 suffix when using save_weights.
     final_path = os.path.join(weights_dir, model_name + '.weights.h5')
     model.save_weights(final_path)
     print(f"Final weights saved: {final_path}")
+
+    # Optional convenience artifact: full model in legacy .h5 format.
+    # Keep this separate from weight checkpoints so predict.py stays unchanged.
+    full_model_path = os.path.join(weights_dir, model_name + '.h5')
+    try:
+        model.save(full_model_path)
+        print(f"Full model saved: {full_model_path}")
+    except Exception as e:
+        print(f"[WARN] Could not save full model .h5: {e}")
 
     # ---- Plot loss ---------------------------------------------------------
     loss     = history.history['loss']

@@ -44,7 +44,7 @@ def denoise_audio(
     Args:
         input_path:   Path to the noisy input WAV.
         output_path:  Path to save the denoised WAV.
-        weights_path: Path to .h5 weights (defaults to PRETRAINED_WEIGHTS in config).
+        weights_path: Path to .weights.h5 weights (defaults to PRETRAINED_WEIGHTS in config).
     """
     if weights_path is None:
         weights_path = C.PRETRAINED_WEIGHTS
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Denoise a WAV file')
     parser.add_argument('--input',   required=True, help='Noisy input WAV path')
     parser.add_argument('--output',  required=True, help='Denoised output WAV path')
-    parser.add_argument('--weights', default=None,  help='Model weights .h5 path')
+    parser.add_argument('--weights', default=None,  help='Model weights .weights.h5 path')
     args = parser.parse_args()
 
     denoise_audio(

@@ -19,7 +19,7 @@ def build_unet(input_shape=(128, 128, 1), pretrained_weights=None):
 
     Args:
         input_shape:        Spectrogram shape (height, width, channels).
-        pretrained_weights: Optional path to a .h5 weights file.
+        pretrained_weights: Optional path to a .weights.h5 weights file.
 
     Returns:
         Compiled Keras Model.
