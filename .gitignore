@@ -27,7 +27,7 @@ data/
 
 # Weights
 weights/
-*.h5
+
 
 # Env
 .env
