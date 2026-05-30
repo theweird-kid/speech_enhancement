@@ -29,7 +29,7 @@ def train_model(
     training_from_scratch = C.TRAINING_FROM_SCRATCH,
     pretrained_weights    = C.PRETRAINED_WEIGHTS,
 ):
-    """Load saved spectrograms, train U-Net, save best weights."""
+    """Load saved spectrograms, train U-Net, save best model."""
     os.makedirs(weights_dir, exist_ok=True)
 
     # ---- Load data ---------------------------------------------------------
@@ -66,7 +66,7 @@ def train_model(
     model.summary()
 
     # ---- Callbacks ---------------------------------------------------------
-    best_path = os.path.join(weights_dir, 'model_best.weights.h5')
+    best_path = os.path.join(weights_dir, 'model_best.h5')
     callbacks = [
         ModelCheckpoint(best_path, monitor='val_loss',
                         save_best_only=True, verbose=1),
@@ -86,20 +86,10 @@ def train_model(
         verbose=1,
     )
 
-    # ---- Save final weights ------------------------------------------------
-    # Keras 3 expects the explicit .weights.h5 suffix when using save_weights.
-    final_path = os.path.join(weights_dir, model_name + '.weights.h5')
-    model.save_weights(final_path)
-    print(f"Final weights saved: {final_path}")
-
-    # Optional convenience artifact: full model in legacy .h5 format.
-    # Keep this separate from weight checkpoints so predict.py stays unchanged.
+    # ---- Save final model -------------------------------------------------
     full_model_path = os.path.join(weights_dir, model_name + '.h5')
-    try:
-        model.save(full_model_path)
-        print(f"Full model saved: {full_model_path}")
-    except Exception as e:
-        print(f"[WARN] Could not save full model .h5: {e}")
+    model.save(full_model_path)
+    print(f"Final model saved: {full_model_path}")
 
     # ---- Plot loss ---------------------------------------------------------
     loss     = history.history['loss']

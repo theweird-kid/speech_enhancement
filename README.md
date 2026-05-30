@@ -52,8 +52,8 @@ Replace `YOUR_USERNAME` with your GitHub username in the clone cell.
 | Notebook | Purpose |
 |---|---|
 | `01_Data_Preparation.ipynb` | Load audio → blend → save spectrograms to Drive |
-| `02_Train_Model.ipynb` | Load spectrograms → train U-Net → save weights |
-| `03_Predict_Denoise.ipynb` | Load weights → denoise test WAVs → play & compare |
+| `02_Train_Model.ipynb` | Load spectrograms → train U-Net → save .h5 model |
+| `03_Predict_Denoise.ipynb` | Load .h5 model → denoise test WAVs → play & compare |
 
 ---
 

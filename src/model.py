@@ -12,6 +12,7 @@ from tensorflow.keras.layers import (
     Input, Conv2D, LeakyReLU, MaxPooling2D,
     Dropout, concatenate, UpSampling2D,
 )
+from tensorflow.keras.models import load_model
 
 
 def build_unet(input_shape=(128, 128, 1), pretrained_weights=None):
@@ -19,7 +20,7 @@ def build_unet(input_shape=(128, 128, 1), pretrained_weights=None):
 
     Args:
         input_shape:        Spectrogram shape (height, width, channels).
-        pretrained_weights: Optional path to a .weights.h5 weights file.
+        pretrained_weights: Optional path to a saved .h5 model or legacy weights file.
 
     Returns:
         Compiled Keras Model.
@@ -87,8 +88,18 @@ def build_unet(input_shape=(128, 128, 1), pretrained_weights=None):
     )
 
     if pretrained_weights:
-        model.load_weights(pretrained_weights)
-        print(f"Loaded weights from: {pretrained_weights}")
+        try:
+            loaded_model = load_model(pretrained_weights, compile=False)
+            loaded_model.compile(
+                optimizer='adam',
+                loss=tf.keras.losses.Huber(),
+                metrics=['mae'],
+            )
+            print(f"Loaded model from: {pretrained_weights}")
+            return loaded_model
+        except Exception:
+            model.load_weights(pretrained_weights)
+            print(f"Loaded weights from: {pretrained_weights}")
 
     return model
 
