@@ -1,0 +1,1 @@
+"""HearAI backend package."""

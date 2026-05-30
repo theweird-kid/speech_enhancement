@@ -13,7 +13,7 @@ app/backend/__pycache__/
 app/backend/*.pyc
 app/__pycache__/
 
-app
+
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb_checkpoints
