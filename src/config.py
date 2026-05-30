@@ -2,15 +2,20 @@
 config.py
 ---------
 All hyper-parameters and paths in one place.
-Edit the DRIVE_ROOT to match your Google Drive folder name.
+
+The original notebooks were written against a Google Drive layout. For the
+workspace app we prefer local, repo-relative defaults with environment
+variable overrides so the backend can run without editing the source.
 """
 
-import os
+from __future__ import annotations
 
-# ============================================================
-# Google Drive root  (update this to match your Drive layout)
-# ============================================================
-DRIVE_ROOT = '/content/drive/MyDrive/speech_enhancement'
+import os
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DRIVE_ROOT = os.environ.get('HEARAI_ROOT', str(REPO_ROOT))
 
 
 # ============================================================
@@ -56,7 +61,10 @@ EPOCHS              = 50
 BATCH_SIZE          = 64
 TRAINING_FROM_SCRATCH = True    # False = load PRETRAINED_WEIGHTS and fine-tune
 MODEL_NAME          = 'model_unet'
-PRETRAINED_WEIGHTS  = os.path.join(WEIGHTS_DIR, MODEL_NAME + '.h5')
+PRETRAINED_WEIGHTS  = os.environ.get(
+    'HEARAI_MODEL_PATH',
+    os.path.join(REPO_ROOT, MODEL_NAME + '.h5'),
+)
 
 # ============================================================
 # Prediction / inference settings

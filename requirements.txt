@@ -1,8 +1,14 @@
-# All versions tested on Google Colab (Python 3.10, TF 2.x)
-tensorflow>=2.10
+# TensorFlow wheels are not available on every Python version.
+# Skip it on unsupported interpreters so the rest of the app can still install.
+tensorflow>=2.16.1; python_version < "3.14"
+fastapi>=0.115
+uvicorn[standard]>=0.32
+python-multipart>=0.0.12
+faster-whisper>=1.0.3
 librosa>=0.10
 soundfile
 scikit-learn
 scipy
 matplotlib
 numpy
+websockets>=13.1

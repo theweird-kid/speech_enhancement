@@ -104,4 +104,29 @@ At inference, the predicted noise is subtracted from the noisy spectrogram.
 ## 📄 License
 
 MIT — see [original repo](https://github.com/vbelz/Speech-enhancement).
+
+---
+
+## HearAI Prototype
+
+This workspace now includes a working prototype app under [app/](app). It uses the existing speech enhancement code in [src/](src) and loads a trained `model_unet.h5` from the repository root when present. If the file is missing, the backend falls back to a non-ML spectral enhancement path so the demo still runs.
+
+For the full TensorFlow model path, use Python 3.10 or 3.11. The workspace venv in this session is Python 3.14, which cannot install TensorFlow wheels, so the app will run in fallback mode there.
+
+### Local run
+
+Run the backend from the repository root:
+
+```bash
+python server.py
+```
+
+Run the frontend from [app/frontend](app/frontend):
+
+```bash
+npm install
+npm run dev
+```
+
+If your trained model is stored elsewhere, set `HEARAI_MODEL_PATH` before starting the backend.
 # speech_enhancement
